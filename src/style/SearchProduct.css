@@ -1,0 +1,168 @@
+/* SearchProduct.css (phiên bản Picare màu xanh) */
+
+.search-container {
+  padding: 20px;
+  max-width: 700px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.search-container h2 {
+  margin-bottom: 16px;
+  color: #004C34;
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+}
+
+.search-container input[type="text"] {
+  padding: 10px;
+  width: 65%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 10px;
+  font-size: 16px;
+}
+
+.search-container button {
+  padding: 10px 16px;
+  background-color: #00784C;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #00573D;
+}
+
+.search-container .error {
+  color: red;
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.product-info {
+  margin-top: 30px;
+  background-color: #E6F5F1;
+  border: 1px solid #A2D6C6;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.product-info h3 {
+  color: black;
+  font-size: 20px;
+  margin-bottom: 15px;
+}
+
+.product-lot {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #D6EFE7;
+  border-left: 5px solid #00784C;
+  border-radius: 6px;
+}
+
+.product-lot p {
+  margin: 6px 0;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.product-storage {
+  margin-left: 20px;
+  margin-top: 12px;
+  padding: 12px;
+  background: #ffffff;
+  border: 1px dashed #aaa;
+  border-radius: 5px;
+}
+
+.product-storage p {
+  margin: 4px 0;
+  line-height: 1.5;
+  font-size: 14px;
+}
+
+.product-storage hr {
+  margin-top: 10px;
+  border: none;
+  border-top: 1px dashed #ccc;
+}
+
+/* #qr-reader {
+  border: 2px dashed #00784C;
+  padding: 10px;
+  margin-top: 10px;
+} */
+#scanner {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  border: 2px dashed #00784C;
+  padding: 10px;
+}
+
+
+
+/* 📱 Responsive cho điện thoại */
+@media (max-width: 768px) {
+  .search-container input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .search-container button {
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .product-info, .product-lot, .product-storage {
+    font-size: 15px;
+    padding: 15px;
+  }
+
+  .product-lot {
+    margin-left: 0;
+    padding-left: 12px;
+  }
+
+  .product-storage {
+    margin-left: 0;
+  }
+
+  .search-container {
+    padding: 15px;
+  }
+}
+.button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.button-group button {
+  flex: 1 1 140px;
+  padding: 12px 20px;
+  background: linear-gradient(135deg, #00A86B, #00784C);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 120, 76, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.button-group button:hover {
+  background: linear-gradient(135deg, #00784C, #00573D);
+  transform: scale(1.03);
+}
