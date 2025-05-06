@@ -6,50 +6,36 @@ export default function SearchProduct() {
   const [barcode, setBarcode] = useState('');
   const [product, setProduct] = useState(null);
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
   const [isScannerOpen, setIsScannerOpen] = useState(false);
 
-  
-  // const handleSearch = async () => {
-  //   setError('');
-  //   setProduct(null);
-  //   try {
-  //     const response = await fetch(`https://eclatduteint.vn/webhook/TonkhoBarcode?code=${barcode}`);
-  //     const data = await response.json();
-  
-  //     if (!response.ok || !data || data.length === 0) {
-  //       console.warn('API Response:', data);
-  //       throw new Error('Không tìm thấy sản phẩm trong kho.');
-  //     }
-  
-  //     setProduct(data);
-  //   } catch (err) {
-  //     console.error('Lỗi tìm kiếm:', err);
-  //     setError(err.message);
-  //   }
-  // };
   const handleSearch = async (inputCode) => {
     const searchCode = inputCode || barcode;
     setError('');
     setProduct(null);
     try {
+      setLoading(true); // ✅ Bắt đầu loading
+
       const response = await fetch(`https://eclatduteint.vn/webhook/TonkhoBarcode?code=${searchCode}`);
       const data = await response.json();
-  
+
       if (!response.ok || !data || data.length === 0) {
         console.warn('API Response:', data);
         throw new Error('Không tìm thấy sản phẩm trong kho.');
       }
-  
+
       setProduct(data);
+      setError('');
     } catch (err) {
       console.error('Lỗi tìm kiếm:', err);
+      setProduct(null);
       setError(err.message);
+    } finally {
+      setLoading(false); // ✅ Kết thúc loading dù thành công hay lỗi
     }
+
   };
-  
-  
-  
-  
 
   const formatDateVN = (isoDate) => {
     if (!isoDate) return '';
@@ -71,14 +57,32 @@ export default function SearchProduct() {
     return acc;
   }, {});
 
-  const handleDetected = (code) => {
-    setBarcode(code);              // vẫn cập nhật UI
-    setIsScannerOpen(false);       // đóng modal
-    handleSearch(code);            // tìm kiếm bằng mã mới phát hiện
+  // const handleDetected = (code) => {
+  //   setBarcode(code);              
+  //   setIsScannerOpen(false);      
+  //   handleSearch(code);            
+  // };
+  const handleDetected = async (code) => {
+    setBarcode(code);
+    setIsScannerOpen(false);
+
+    try {
+      const response = await fetch(`https://eclatduteint.vn/webhook/TonkhoBarcode?code=${code}`);
+      const data = await response.json();
+
+      if (!response.ok || !data || data.length === 0) {
+        throw new Error('Không tìm thấy sản phẩm trong kho.');
+      }
+
+      setProduct(data);
+      setError('');
+    } catch (err) {
+      console.error('Lỗi khi quét:', err);
+      setProduct(null);
+      setError(err.message || 'Đã có lỗi xảy ra khi quét mã.');
+    }
   };
-  
-  
-  
+
 
   return (
     <div className="search-container">
@@ -107,6 +111,13 @@ export default function SearchProduct() {
         <button onClick={handleSearch}>🔍 Tìm kiếm</button>
         <button onClick={() => setIsScannerOpen(true)}>📷 Quét mã</button>
       </div>
+
+      {loading && (
+        <p style={{ color: '#00784C', fontStyle: 'italic', marginTop: '10px' }}>
+          🔄 Đang tìm kiếm sản phẩm, vui lòng chờ...
+        </p>
+      )}
+
 
       {isScannerOpen && (
         <BarcodeScanner
